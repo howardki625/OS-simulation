@@ -1,5 +1,5 @@
-# CISC 3320 OS-simulation
-OS simulation group project 
+# CISC 3320 Fall 2016
+OS-simulation group project 
 
 in C++
 

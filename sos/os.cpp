@@ -1,6 +1,12 @@
 #include <iostream>
+#include <vector>
+#include <queue>
 
 using namespace std;
+
+// global variables
+
+// function prototypes
 
 // channel commands from the simulator.
 void siodisk(long jobnum);

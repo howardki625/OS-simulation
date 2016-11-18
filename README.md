@@ -1,6 +1,10 @@
-# OS-simulation
-simulation of an OS group project in C++
+# CISC 3320 OS-simulation
+OS simulation group project 
 
-  Hoyin Ki
-  Devin Dougherty
-  Taniesha Lewis
+in C++
+
+  - Hoyin Ki
+
+  - Devin Dougherty
+
+  - Taniesha Lewis

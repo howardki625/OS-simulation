@@ -1,10 +1,12 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include "job.h"
 
 using namespace std;
 
 // global variables
+vector<job> joblist; // a vector to store jobs coming from sos.
 
 // function prototypes
 

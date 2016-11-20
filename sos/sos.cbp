@@ -23,6 +23,7 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="job.h" />
 		<Unit filename="os.cpp" />
 		<Unit filename="sos.o" />
 		<Extensions>

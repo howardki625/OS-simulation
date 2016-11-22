@@ -1,10 +1,10 @@
 # depslib dependency file v1.0
-1479608305 source:d:\onedrive\documents\brooklyn college\fall2016\os\sos\os.cpp
+1479789665 source:d:\onedrive\documents\brooklyn college\fall2016\os\sos\os.cpp
 	<iostream>
 	<vector>
 	<queue>
 	"job.h"
 
-1479608772 d:\onedrive\documents\brooklyn college\fall2016\os\sos\job.h
+1479790036 d:\onedrive\documents\brooklyn college\fall2016\os\sos\job.h
 	<iostream>
 

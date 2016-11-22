@@ -32,6 +32,9 @@ void startup()
 void Crint(long &a, long p[])
 {
     // indicates arrival of new job on drum.
+
+    // push job onto joblist
+    joblist.push_back(job(p[1], p[2], p[3], p[4], p[5]));
 }
 
 void Dskint(long &a, long p[])

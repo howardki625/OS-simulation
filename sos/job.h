@@ -74,6 +74,11 @@ public:
         return cpuUsedTime;
     }
 
+    void setCpuUsedTime(long time)
+    {
+        this->cpuUsedTime = time;
+    }
+
     long getMaxCpuTime()
     {
         return maxCpuTime;
@@ -82,6 +87,11 @@ public:
     long getIOpending()
     {
         return ioPending;
+    }
+
+    void setIOpending(long io)
+    {
+        this->ioPending = io;
     }
 
     long getPriority()
@@ -94,9 +104,19 @@ public:
         return blocked;
     }
 
+    void setBlocked(bool flag)
+    {
+        this->blocked = flag;
+    }
+
     bool isLatched()
     {
         return latched;
+    }
+
+    void setLatched(bool flag)
+    {
+        this->latched = flag;
     }
 
     bool isInCore()
@@ -104,9 +124,19 @@ public:
         return inCore;
     }
 
+    void setInCore(bool flag)
+    {
+        this->inCore = flag;
+    }
+
     bool isTerm()
     {
         return term;
+    }
+
+    void setTerm(bool flag)
+    {
+        this->term = flag;
     }
 
 };

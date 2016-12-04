@@ -139,6 +139,24 @@ public:
         this->term = flag;
     }
 
+    // print function - for debugging use.
+    void printInfo()
+    {
+        cout << "\nJob Info:";
+        cout << "\nJob#: " << jobnum;
+        cout << "\nSize: " << jobsize;
+        cout << "\nTime arrived: " << entryTime;
+        cout << "\nCPU time used: " << cpuUsedTime;
+        cout << "\nMax CPU time: " << maxCpuTime;
+        cout << "\nI/O Pending: " << ioPending;
+        cout << "\nPriority: " << priority;
+        cout << "\nBlocked: " << blocked;
+        cout << "\nLatched: " << latched;
+        cout << "\nIn Core: " << inCore;
+        cout << "\nTerm: " << term;
+        cout << "\n";
+    }
+
 };
 
 #endif // JOB_H

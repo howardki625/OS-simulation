@@ -53,7 +53,7 @@ public:
         term = false;
     }
 
-    // member functions
+    // member functions to access the variables
     long getjobnum()
     {
         return jobnum;

@@ -2,12 +2,14 @@
 #include <vector>
 #include <queue>
 #include "job.h"
+#include "memory.h"
 
 using namespace std;
 
 // global variables
 vector<job> joblist; // a vector to store jobs coming from sos.
-long runningJob; // variable indicating the location of the running job on the vector.
+long runningJob; // holds the location of the running job on the vector.
+memory memory; // create the memory
 
 // function prototypes
 void bookkeeper(long); // book keeping function - keeps track of time.
@@ -26,7 +28,7 @@ void startup()
     // initializes the system.
     // called once at startup.
     ontrace();
-    runningJob = -1; // initialize at -1 since joblist[0] can have a job in it.
+    runningJob = -1; // initialize at -1 == no job running since joblist[0] can have a job in it.
 }
 
 //--------------------//

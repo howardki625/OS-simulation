@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -24,6 +25,7 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="job.h" />
+		<Unit filename="memory.h" />
 		<Unit filename="os.cpp" />
 		<Unit filename="sos.o" />
 		<Extensions>

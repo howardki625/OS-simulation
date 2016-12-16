@@ -11,6 +11,17 @@ vector<job> joblist; // a vector to store jobs coming from sos.
 long runningJob; // holds the location of the running job on the vector.
 memory memory; // create the memory
 
+// findNextJob function definition
+job job::findNextJob(){
+    vector<job>::iterator it;
+    for(it=joblist.begin();it<joblist.end();++it){
+        if(memory.findfreespace(*it.getjobsize())!=-1&&!*it.isInCore()){
+            return *it;
+        }
+    }
+return NULL;
+}
+
 // function prototypes
 void bookkeeper(long); // book keeping function - keeps track of time.
 

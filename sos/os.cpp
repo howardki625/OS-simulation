@@ -58,7 +58,11 @@ void Crint(long &a, long p[])
 
 void Dskint(long &a, long p[])
 {
-    // disk interrupt.
+  // The disk has finished an I/O operation. I/O has been finished for job at top of I/O queue.
+
+    bookkeeper(p[5]); // updates the current time
+    ioQueue.pop(); // remove job from the queue
+    joblist[runningJob].setIOpending(joblist(runningJob).getIOpending()-1); // decrement the amount of pending jobs.
 }
 
 void Drmint(long &a, long p[])
@@ -82,6 +86,27 @@ void Tro(long &a, long p[])
 
 void Svc(long &a, long p[])
 {
+    bookkeeper(p[5]); //bookmark current time
+    if(a==5){ //There is a request to terminate
+        if(!joblist[runningJob].getIOpending())
+            {//If there is no pending io operations, then terminate the running job
+            joblist[runningJob].setTerm(true); // Terminates the running job
+
+            } 
+            }else if (a==6){ // requesting another disk io operation
+            if(ioQueue.empty())
+                { // if the queue is empty
+                    siodisk(joblist[runningJob].getjobnum()); // get the job number from sos
+                    ioQueue.push(joblist[runningJob].getjobnum()); // adds job number to the queue
+                }
+            }else if (a==7){ // request to block
+                if(joblist[runningJob].ioPending()){ // if there is pending io for the running job
+                        joblist[runningJob].setBlocked(true);
+
+                }
+            }
+    
+    }
     // user program supervisor call.
 }
 

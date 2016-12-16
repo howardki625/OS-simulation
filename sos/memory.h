@@ -4,6 +4,8 @@
 using namespace std;
 
 // representation of the memory
+// 0 = free space
+// # = jobnum
 class memory
 {
 private:
@@ -130,8 +132,9 @@ public:
         }
         return address;
     }
-    
+
     // Determine next job to run through round robin
+    // returns jobnum
     long roundrobin()
     {
         long i=roundrobinlong;
@@ -143,7 +146,7 @@ public:
         }
         return 0;
     }
-    
+
 };
 
 #endif // MEMORY_H

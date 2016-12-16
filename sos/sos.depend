@@ -28,3 +28,16 @@
 1481778970 d:\onedrive\documents\brooklyn college\fall2016\os\sos\memory.h
 	<iostream>
 
+1481908552 source:d:\onedrive\documents\brooklyn college\fall2016\os\os-simulation-master\sos\os.cpp
+	<iostream>
+	<vector>
+	<queue>
+	"job.h"
+	"memory.h"
+
+1481921239 d:\onedrive\documents\brooklyn college\fall2016\os\os-simulation-master\sos\job.h
+	<iostream>
+
+1481920956 d:\onedrive\documents\brooklyn college\fall2016\os\os-simulation-master\sos\memory.h
+	<iostream>
+

@@ -138,8 +138,9 @@ public:
     {
         this->term = flag;
     }
-    
-    //Checks to find the first job not in core that can fit into core
+
+    // Checks to find the first job not in core that can fit into core
+    // loops thru the joblist and check if it fits criteria
     job findNextJob(){
         vector<job>::iterator it;
         for(it=joblist.begin();it<joblist.end();++it){
@@ -149,7 +150,7 @@ public:
         }
         return NULL;
     }
-    
+
     // print function - for debugging use.
     void printInfo()
     {

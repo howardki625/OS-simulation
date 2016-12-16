@@ -141,15 +141,7 @@ public:
 
     // Checks to find the first job not in core that can fit into core
     // loops thru the joblist and check if it fits criteria
-    job findNextJob(){
-        vector<job>::iterator it;
-        for(it=joblist.begin();it<joblist.end();++it){
-            if(memory.findfreespace(*it.getjobsize())!=-1&&!*it.isInCore()){
-                return *it;
-            }
-        }
-        return NULL;
-    }
+    job findNextJob();
 
     // print function - for debugging use.
     void printInfo()

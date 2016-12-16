@@ -55,7 +55,7 @@ void Drmint(long &a, long p[])
     // drum interrupt.
     a=1;
     bookkeeper(p[5]);
-    scheduler(&a, p[], false);
+    scheduler(&a, p[], false, false);
     a=2;
     return;
 }
@@ -64,7 +64,7 @@ void Tro(long &a, long p[])
 {
     a=1;
     bookkeeper(p[5]);
-    scheduler(&a, p[], true);
+    scheduler(&a, p[], true, false);
     a=2;
     return;
 }
@@ -89,4 +89,59 @@ void bookkeeper(long time)
         t = time - joblist[runningJob].getEntryTime();
         joblist[runningJob].setCpuUsedTime(t);
     }
+}
+
+void scheduler(long &a, long p[], bool rem, bool kill){
+
+    // removes finished jobs from memory and terminates the running job if expired/asked
+    if(rem){
+        swapper(runningjob, memory.findjob(runningjob.getjobnum()), 1);
+        if(runningjob.getCpuUsedTime()==runningjob.getMaxCpuTime()||kill){
+            runningjob.setTerm(true);
+        }
+    }
+
+    // next job to run
+    long torun;
+    torun=memory.roundrobin();
+    vector<job>::iterator it;
+    for(it=joblist.begin();it<joblist.end();++it){
+            if(*it.getjobnum()==torun){
+                    p[2]=memory.findjob(torun);
+                    p[3]=*it.getjobsize();
+                    p[4]=3;
+            }
+    }
+
+    // moves jobs from drum to memory, repeating if there's enough space
+    bool repeat=true;
+    while(repeat){
+        job toMem = joblist.findNextJob();
+        if(toMem!=NULL){
+            swapper(toMem, memory.findfreespace(toMem.getjobsize()), 0);
+        }
+        else repeat=false;
+    }
+
+    return;
+}
+
+// moves jobs from core to drum and from drum to core, depending on direction
+void swapper(job swapjob, long address, long direction){
+    vector<job>::iterator it;
+    for(it=joblist.begin();it<joblist.end();++it){
+            if(*it.getjobnum()==swapjob.getjobnum()){
+                if(direction==0) {
+                        *it.setInCore(true);
+                        memory.addjob(swapjob.getjobnum(), swapjob.getjobsize);
+                }
+                else if(direction==1) {
+                        *it.setInCore(false);
+                        memory.removejob(swapjob.getjobnum());
+                }
+                break;
+            }
+    }
+    siodrum(swapjob.getjobnum(), swapjob.getjobsize(), address, direction);
+    return;
 }

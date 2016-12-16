@@ -10,6 +10,7 @@ using namespace std;
 vector<job> joblist; // a vector to store jobs coming from sos.
 long runningJob; // holds the location of the running job on the vector.
 memory memory; // create the memory
+queue<long>ioQueue;
 
 // findNextJob function definition
 job job::findNextJob(){

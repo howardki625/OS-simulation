@@ -132,7 +132,8 @@ public:
     }
     
     // Determine next job to run through round robin
-    long roundrobin(){
+    long roundrobin()
+    {
         long i=roundrobinlong;
         ++roundrobinlong;
         while(roundrobinlong!=i){

@@ -138,7 +138,18 @@ public:
     {
         this->term = flag;
     }
-
+    
+    //Checks to find the first job not in core that can fit into core
+    job findNextJob(){
+        vector<job>::iterator it;
+        for(it=joblist.begin();it<joblist.end();++it){
+            if(memory.findfreespace(*it.getjobsize())!=-1&&!*it.isInCore()){
+                return *it;
+            }
+        }
+        return NULL;
+    }
+    
     // print function - for debugging use.
     void printInfo()
     {

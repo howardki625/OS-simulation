@@ -53,11 +53,20 @@ void Dskint(long &a, long p[])
 void Drmint(long &a, long p[])
 {
     // drum interrupt.
+    a=1;
+    bookkeeper(p[5]);
+    scheduler(&a, p[], false);
+    a=2;
+    return;
 }
 
 void Tro(long &a, long p[])
 {
-    // timer-run-out.
+    a=1;
+    bookkeeper(p[5]);
+    scheduler(&a, p[], true);
+    a=2;
+    return;
 }
 
 void Svc(long &a, long p[])

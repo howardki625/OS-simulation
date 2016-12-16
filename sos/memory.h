@@ -11,6 +11,7 @@ private:
     // each box of the array is 1k of addresses
     // each box of the array has the number of the job that is taking up the address
     long mem[100];
+    long roundrobinlong=0;
 
 public:
     // constructor
@@ -129,6 +130,19 @@ public:
         }
         return address;
     }
+    
+    // Determine next job to run through round robin
+    long roundrobin(){
+        long i=roundrobinlong;
+        ++roundrobinlong;
+        while(roundrobinlong!=i){
+            if(mem[roundrobinlong]!=0) return roundrobinlong;
+            if(roundrobinlong!=99) ++roundrobinlong
+            else roundrobinlong=0;
+        }
+        return 0;
+    }
+    
 };
 
 #endif // MEMORY_H

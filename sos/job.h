@@ -146,7 +146,7 @@ public:
     {
         this->term = flag;
     }
-    bool isInMemory(bool flag)
+    bool isInMemory()
     {
         return inMemory;
     }
@@ -165,7 +165,7 @@ public:
     }
     void setEntryTime(long io)
     {
-        this->entryTime = entryTime;
+        this->entryTime = io;
     }
 
     // Checks to find the first job not in core that can fit into core

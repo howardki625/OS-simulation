@@ -19,6 +19,7 @@ private:
     bool latched;
     bool inCore;
     bool term;
+    bool inMemory;
 
 public:
     // default constructor
@@ -35,6 +36,7 @@ public:
         latched = false;
         inCore = false;
         term = false;
+        inMemory= false;
     }
 
     // constructor with parameters from p[]
@@ -51,6 +53,7 @@ public:
         latched = false;
         inCore = false;
         term = false;
+        inMemory= false;
     }
 
     // member functions to access the variables
@@ -137,6 +140,15 @@ public:
     void setTerm(bool flag)
     {
         this->term = flag;
+    }
+    bool isInMemory(bool flag)
+    {
+        return inMemory;
+        
+    }
+    void setInMemory(bool flag)
+    {
+        this->inMemory = flag;
     }
 
     // Checks to find the first job not in core that can fit into core

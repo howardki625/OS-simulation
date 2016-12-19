@@ -12,6 +12,9 @@ long runningJob; // holds the location of the running job on the vector.
 memory memory; // create the memory
 queue<long>ioQueue;
 long doingio; // holds the number for the job that is currently doing I/O
+void getJob();
+void startJob(long &a, long p[]);
+
 
 // findNextJob function definition
 job job::findNextJob(){
@@ -42,7 +45,7 @@ void startup()
     // called once at startup.
     ontrace();
     runningJob = -1; // initialize at -1 == no job running since joblist[0] can have a job in it.
-    doingio= -1; 
+    doingio= -1;
 }
 
 //--------------------//
@@ -81,10 +84,10 @@ void Dskint(long &a, long p[])
     getJob();
     siodisk(joblist[doingio].getjobnum());
     }
-    
+
     startJob(a,p);
     return;
-    
+
 }
 
 void Drmint(long &a, long p[])
@@ -114,7 +117,7 @@ void Svc(long &a, long p[])
             {//If there is no pending io operations, then terminate the running job
             joblist[runningJob].setTerm(true); // Terminates the running job
 
-            } 
+            }
             }else if (a==6){ // requesting another disk io operation
             if(ioQueue.empty())
                 { // if the queue is empty
@@ -122,15 +125,15 @@ void Svc(long &a, long p[])
                     ioQueue.push(joblist[runningJob].getjobnum()); // adds job number to the queue
                 }
             }else if (a==7){ // request to block
-                if(joblist[runningJob].ioPending()){ // if there is pending io for the running job
+                if(joblist[runningJob].getIOpending()){ // if there is pending io for the running job
                         joblist[runningJob].setBlocked(true);
 
                 }
             }
-    
+
     }
     // user program supervisor call.
-}
+
 //Dispatcher
 void startJob(long &a, long p[])
 {
@@ -138,7 +141,7 @@ void startJob(long &a, long p[])
         a = 1;
         return;
     } else{
-    
+
     a=2;
     p[2]= joblist[runningJob].getLocation();
     p[3]= joblist[runningJob].getjobsize();
@@ -227,3 +230,4 @@ void swapper(job swapjob, long address, long direction){
     siodrum(swapjob.getjobnum(), swapjob.getjobsize(), address, direction);
     return;
 }
+

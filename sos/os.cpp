@@ -61,12 +61,31 @@ void Crint(long &a, long p[])
 
 void Dskint(long &a, long p[])
 {
-  // The disk has finished an I/O operation. I/O has been finished for job at top of I/O queue.
-
+   // The disk has finished an I/O operation. I/O has been finished for job at top of I/O queue.
+    for(long i=0; i < joblist.size(); i++){ // get the job index
+        if(joblist[i].getjobnum()== ioQueue.front())
+          doingio= i;
+    }
     bookkeeper(p[5]); // updates the current time
     ioQueue.pop(); // remove job from the queue
     joblist[doingio].setIOpending(joblist(doingio).getIOpending()-1); // decrement the amount of pending jobs.
     
+    if(!joblist[doingio].getIOpending()){ // if there is no more pending io 
+        joblist[doingio].setLatched(false); // unlatch
+        joblist[doingio].setBlocked(false); // unblock 
+        
+        if(joblist[doingio].isTerm()){
+          joblist[doingio].removejob(doingio);
+        }  
+    } if(!ioQueue.empty()){ // if there aren't anymore jobs in the io queue
+        for(long i=0; i < joblist.size(); i++){ // get the job index
+        if(joblist[i].getjobnum()== ioQueue.front())
+            doingio= i;
+    }
+    siodisk(joblist[doingio].getjobnum());   
+    }
+    startJob(a,p);    
+    return;
     
 }
 
@@ -184,5 +203,22 @@ void swapper(job swapjob, long address, long direction){
             }
     }
     siodrum(swapjob.getjobnum(), swapjob.getjobsize(), address, direction);
+    return;
+}
+//Dispatcher
+void startJob(long &a, long p[])
+{
+    if(!joblist[runningJob].isInMemory() || joblist[runningJob].isBlocked()){ // cannot run job if not in memory or if job is blocked
+        a = 1;
+        return;
+    } else{
+    
+    a=2;
+    p[2]= joblist[runningJob].getLocation();
+    p[3]= joblist[runningJob].getjobsize();
+    p[4]= joblist[runningJob].getMaxCpuTime();
+    joblist[runningJob].setEntryTime(p[5]);
+    joblist[runningJob].setInCore(true);
+    }
     return;
 }

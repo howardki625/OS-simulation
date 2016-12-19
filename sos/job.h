@@ -15,6 +15,7 @@ private:
     long maxCpuTime;
     long ioPending;
     long priority;
+    long location;
     bool blocked;
     bool latched;
     bool inCore;
@@ -32,6 +33,7 @@ public:
         maxCpuTime = 0;
         ioPending = 0;
         priority = 0;
+        location = 0;
         blocked = false;
         latched = false;
         inCore = false;
@@ -49,6 +51,7 @@ public:
         this->maxCpuTime = maxCpuTime;
         ioPending = 0;
         this->priority = priority;
+        this->location = location;
         blocked = false;
         latched = false;
         inCore = false;
@@ -150,6 +153,19 @@ public:
     {
         this->inMemory = flag;
     }
+     long getLocation()
+    {
+        return location;
+    }
+    void setLocation()
+    {
+        this->location = location;
+    }
+    void setEntryTime()
+    {
+        this->entryTime = entryTime;
+    }
+    
 
     // Checks to find the first job not in core that can fit into core
     // loops thru the joblist and check if it fits criteria

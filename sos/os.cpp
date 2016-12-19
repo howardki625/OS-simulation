@@ -11,6 +11,7 @@ vector<job> joblist; // a vector to store jobs coming from sos.
 long runningJob; // holds the location of the running job on the vector.
 memory memory; // create the memory
 queue<long>ioQueue;
+long doingio; // holds the number for the job that is currently doing I/O
 
 // findNextJob function definition
 job job::findNextJob(){
@@ -41,6 +42,7 @@ void startup()
     // called once at startup.
     ontrace();
     runningJob = -1; // initialize at -1 == no job running since joblist[0] can have a job in it.
+    doingio= -1; 
 }
 
 //--------------------//
@@ -63,7 +65,9 @@ void Dskint(long &a, long p[])
 
     bookkeeper(p[5]); // updates the current time
     ioQueue.pop(); // remove job from the queue
-    joblist[runningJob].setIOpending(joblist(runningJob).getIOpending()-1); // decrement the amount of pending jobs.
+    joblist[doingio].setIOpending(joblist(doingio).getIOpending()-1); // decrement the amount of pending jobs.
+    
+    
 }
 
 void Drmint(long &a, long p[])

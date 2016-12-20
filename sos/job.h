@@ -170,7 +170,7 @@ public:
 
     // Checks to find the first job not in core that can fit into core
     // loops thru the joblist and check if it fits criteria
-    job findNextJob();
+    long findNextJob();
 
     // print function - for debugging use.
     void printInfo()

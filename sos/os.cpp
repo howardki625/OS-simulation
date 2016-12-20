@@ -17,11 +17,10 @@ void startJob(long &a, long p[]);
 
 
 // findNextJob function definition
-job job::findNextJob(){
-    vector<job>::iterator it;
-    for(it=joblist.begin();it<joblist.end();++it){
-        if(memory.findfreespace(*it.getjobsize())!=-1&&!*it.isInCore()){
-            return *it;
+long job::findNextJob(){
+    for(long i=0; i<joblist.size(); i++){
+        if(memory.findfreespace(joblist[i].getjobsize()) != -1 && !joblist[i].isInCore()){
+            return i;
         }
     }
 return NULL;
@@ -29,6 +28,8 @@ return NULL;
 
 // function prototypes
 void bookkeeper(long); // book keeping function - keeps track of time.
+void scheduler(long&, long*, bool, bool); // scheduler function prototype - picks the job to move around.
+void swapper(job, long, long); // swapper prototype - moves job from core to drum and vice versa.
 
 // channel commands from the simulator.
 void siodisk(long jobnum);
@@ -60,6 +61,8 @@ void Crint(long &a, long p[])
 
     // push job onto joblist
     joblist.push_back(job(p[1], p[2], p[3], p[4], p[5]));
+
+    startJob(a, p);
 }
 
 void Dskint(long &a, long p[])
@@ -93,19 +96,18 @@ void Dskint(long &a, long p[])
 void Drmint(long &a, long p[])
 {
     // drum interrupt.
-    a=1;
     bookkeeper(p[5]);
-    scheduler(&a, p[], false, false);
-    a=2;
+    scheduler(a, p, false, false);
+    startJob(a,p);
     return;
 }
 
 void Tro(long &a, long p[])
 {
-    a=1;
+    // timer run out
     bookkeeper(p[5]);
-    scheduler(&a, p[], true, false);
-    a=2;
+    scheduler(a, p, true, false);
+    startJob(a,p);
     return;
 }
 

@@ -19,7 +19,7 @@ public:
     // constructor
     // goes thru all the addresses and set them all to 0
     // to show that they are not in use since job# starts at 1
-    FST()
+    memory()
     {
         for (long i=0; i<100; i++)
         {
@@ -141,7 +141,7 @@ public:
         ++roundrobinlong;
         while(roundrobinlong!=i){
             if(mem[roundrobinlong]!=0) return roundrobinlong;
-            if(roundrobinlong!=99) ++roundrobinlong
+            if(roundrobinlong!=99) ++roundrobinlong;
             else roundrobinlong=0;
         }
         return 0;

@@ -29,7 +29,7 @@ return NULL;
 // function prototypes
 void bookkeeper(long); // book keeping function - keeps track of time.
 void scheduler(long&, long*, bool, bool); // scheduler function prototype - picks the job to move around.
-void swapper(job, long, long); // swapper prototype - moves job from core to drum and vice versa.
+void swapper(long, long, long); // swapper prototype - moves job from core to drum and vice versa.
 
 // channel commands from the simulator.
 void siodisk(long jobnum);
@@ -183,8 +183,8 @@ void scheduler(long &a, long p[], bool rem, bool kill){
     // removes finished jobs from memory and terminates the running job if expired/asked
     if(rem){
         swapper(runningjob, memory.findjob(runningjob.getjobnum()), 1);
-        if(runningjob.getCpuUsedTime()==runningjob.getMaxCpuTime()||kill){
-            runningjob.setTerm(true);
+        if(joblist[runningjob].getCpuUsedTime()==joblist[runningjob].getMaxCpuTime()||kill){
+            joblist[runningjob].setTerm(true);
         }
     }
 
@@ -205,7 +205,7 @@ void scheduler(long &a, long p[], bool rem, bool kill){
     while(repeat){
         job toMem = joblist.findNextJob();
         if(toMem!=NULL){
-            swapper(toMem, memory.findfreespace(toMem.getjobsize()), 0);
+            swapper(toMem.getjobnum(), memory.findfreespace(toMem.getjobsize()), 0);
         }
         else repeat=false;
     }
@@ -214,20 +214,14 @@ void scheduler(long &a, long p[], bool rem, bool kill){
 }
 
 // moves jobs from core to drum and from drum to core, depending on direction
-void swapper(job swapjob, long address, long direction){
-    vector<job>::iterator it;
-    for(it=joblist.begin();it<joblist.end();++it){
-            if(*it.getjobnum()==swapjob.getjobnum()){
-                if(direction==0) {
-                        *it.setInCore(true);
-                        memory.addjob(swapjob.getjobnum(), swapjob.getjobsize);
-                }
-                else if(direction==1) {
-                        *it.setInCore(false);
-                        memory.removejob(swapjob.getjobnum());
-                }
-                break;
-            }
+void swapper(long swapjob, long address, long direction){
+    if(direction==0) {
+        joblist[swapjob].setInCore(true);
+        memory.addjob(swapjob, joblist[swapjob].getjobsize);
+    }
+    else if(direction==1) {
+        joblist[swapjob].setInCore(false);
+        memory.removejob(swapjob);
     }
     siodrum(swapjob.getjobnum(), swapjob.getjobsize(), address, direction);
     return;

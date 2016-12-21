@@ -13,7 +13,6 @@ memory memory; // create the memory
 queue<long>ioQueue;
 long doingio; // holds the number for the job that is currently doing I/O
 void getJob();
-void startJob(long &a, long p[]);
 
 
 // findNextJob function definition
@@ -30,6 +29,7 @@ return NULL;
 void bookkeeper(long); // book keeping function - keeps track of time.
 void scheduler(long&, long*, bool, bool); // scheduler function prototype - picks the job to move around.
 void swapper(long, long, long); // swapper prototype - moves job from core to drum and vice versa.
+void startJob(long &a, long p[]); // dispatcher prototype.
 
 // channel commands from the simulator.
 void siodisk(long jobnum);
@@ -133,8 +133,12 @@ void Svc(long &a, long p[])
                 }
             }
 
-    }
-    // user program supervisor call.
+    } // user program supervisor call.
+
+
+//--------------------------//
+// any additional functions //
+//--------------------------//
 
 //Dispatcher
 void startJob(long &a, long p[])
@@ -161,10 +165,6 @@ void getJob()
     }
 }
 
-//--------------------------//
-// any additional functions //
-//--------------------------//
-
 void bookkeeper(long time)
 {
     // keeps track of time for the currently running job
@@ -182,9 +182,9 @@ void scheduler(long &a, long p[], bool rem, bool kill){
 
     // removes finished jobs from memory and terminates the running job if expired/asked
     if(rem){
-        swapper(runningjob, memory.findjob(runningjob.getjobnum()), 1);
-        if(joblist[runningjob].getCpuUsedTime()==joblist[runningjob].getMaxCpuTime()||kill){
-            joblist[runningjob].setTerm(true);
+        swapper(runningJob, memory.findjob(runningJob.getjobnum()), 1);
+        if(joblist[runningJob].getCpuUsedTime()==joblist[runningJob].getMaxCpuTime()||kill){
+            joblist[runningJob].setTerm(true);
         }
     }
 
